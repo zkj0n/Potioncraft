@@ -7,8 +7,8 @@ public class Mercader extends Comerciante{
         super(id, nombre);
 
         BD.rellenarListaIngredientes(listaIngredientes);
-        for (int i = 0; i < 48; i++) {
-            inventario.put(listaIngredientes.get(i), 0);
+        for (Ingrediente i:listaIngredientes) {
+            inventario.put(i, 0);
         }
         this.inicio();
     }

@@ -29,6 +29,10 @@ public class Ingrediente {
         return nombre;
     }
 
+    public TipoIngrediente getTipo() {
+        return tipo;
+    }
+
     @Override
     public String toString() {
         return "Ingrediente{" +
@@ -53,4 +57,5 @@ public class Ingrediente {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
 }

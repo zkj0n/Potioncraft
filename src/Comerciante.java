@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -7,21 +7,46 @@ public abstract class Comerciante {
     protected int id;
     protected String nombre;
     protected static final Random random=new Random();
-    protected Map<Ingrediente,Integer> inventario=new HashMap<>();
+    protected Map<Ingrediente,Integer> inventario;
 
     public Comerciante(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
+        this.inventario=new LinkedHashMap<>();
     }
     public static Ingrediente obtenerIngrediente(TipoIngrediente tipoIngrediente, List<Ingrediente> listaIngredientes){
         if (tipoIngrediente==TipoIngrediente.HIERBA){
-            return listaIngredientes.get(random.nextInt(1,26));
+            boolean salir=false;
+            Ingrediente i=null;
+            while (!salir){
+               i=listaIngredientes.get(random.nextInt(1,listaIngredientes.size()));
+                if (i.getTipo()==TipoIngrediente.HIERBA){
+                    salir=true;
+                }
+            }
+            return i;
         } else if (tipoIngrediente == TipoIngrediente.SETA) {
-            return listaIngredientes.get(random.nextInt(27,39));
+            boolean salir=false;
+            Ingrediente i=null;
+            while (!salir){
+                i=listaIngredientes.get(random.nextInt(1,listaIngredientes.size()));
+                if (i.getTipo()==TipoIngrediente.SETA){
+                    salir=true;
+                }
+            }
+            return i;
         } else if (tipoIngrediente==TipoIngrediente.MINERAL) {
-            return listaIngredientes.get(random.nextInt(40,48));
+            boolean salir=false;
+            Ingrediente i=null;
+            while (!salir){
+                i=listaIngredientes.get(random.nextInt(1,listaIngredientes.size()));
+                if (i.getTipo()==TipoIngrediente.MINERAL){
+                    salir=true;
+                }
+            }
+            return i;
         } else if (tipoIngrediente == null) {
-            return listaIngredientes.get(random.nextInt(1,48));
+            return listaIngredientes.get(random.nextInt(1,listaIngredientes.size()));
         }else {
             return null;
         }

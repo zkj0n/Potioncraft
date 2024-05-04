@@ -8,8 +8,8 @@ public class Minero extends Comerciante{
     public Minero(int id, String nombre) {
         super(id, nombre);
         BD.rellenarListaIngredientes(listaIngredientes);
-        for (int i = 40; i < 48; i++) {
-            inventario.put(listaIngredientes.get(i), 0);
+        for (Ingrediente i:listaIngredientes) {
+            inventario.put(i, 0);
         }
         this.inicio();
 

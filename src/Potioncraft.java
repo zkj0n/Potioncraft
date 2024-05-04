@@ -17,7 +17,6 @@ public class Potioncraft {
         System.out.println("8. SALIR");
         System.out.print("\nSeleccione una opción... ");
         return scanner.next();
-
     }
 
     public static void main(String[] args) {
@@ -51,10 +50,13 @@ public class Potioncraft {
 
             }
             case "5" ->{
-
+                j.getJugador().mostrar();
             }
             case "6" ->{
-
+                j.getListaComerciante().imprimir();
+            }
+            case "7"->{
+                j.mostrar();
             }
             case "8"->{
                 Scanner scanner = new Scanner(System.in);

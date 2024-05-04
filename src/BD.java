@@ -1,7 +1,9 @@
 import java.sql.*;
 import java.text.Normalizer;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BD {
 
@@ -57,6 +59,38 @@ public class BD {
 
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+    public static void rellenarListaPociones(List<Pocion> lP, List<Ingrediente> lI){
+        try (Connection con = DriverManager.getConnection(URL, USER, PASS)) {
+            String query = "select p.nombre, p.identificador, ip.idIngrediente, ip.unidades\n" +
+                    "from ingrediente i inner join ingredientes_pociones ip on i.identificador=ip.idIngrediente\n" +
+                    "inner join pocion p on p.identificador=ip.idPocion;";
+
+            Statement stmt = con.createStatement();
+            ResultSet tabla = stmt.executeQuery(query);
+
+
+            while (tabla.next()) {
+
+                Map<Ingrediente, Integer> aux=new LinkedHashMap<>();
+
+                for (Ingrediente i: lI){
+                    if (tabla.getInt("idIngrediente")==i.getId()){
+                        aux.put(i,tabla.getInt("unidades"));
+                    }
+                }
+
+                lP.add(new Pocion(tabla.getInt("identificador"),
+                        tabla.getString("nombre"),
+                        aux));
+            }
+
+
+
+
+        }catch (SQLException e){
+            System.out.println("[ERROR]: Conexión fallida...");
         }
     }
 }

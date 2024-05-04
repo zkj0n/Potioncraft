@@ -7,8 +7,8 @@ public class Herborista extends Comerciante{
     public Herborista(int id, String nombre) {
         super(id, nombre);
         BD.rellenarListaIngredientes(listaIngredientes);
-        for (int i = 0; i < 27; i++) {
-            inventario.put(listaIngredientes.get(i), 0);
+        for (Ingrediente i:listaIngredientes) {
+            inventario.put(i, 0);
         }
         this.inicio();
     }

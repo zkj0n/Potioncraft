@@ -7,8 +7,8 @@ public class Recolector extends Comerciante{
     public Recolector(int id, String nombre) {
         super(id, nombre);
         BD.rellenarListaIngredientes(listaIngredientes);
-        for (int i = 27; i < 40; i++) {
-            inventario.put(listaIngredientes.get(i), 0);
+        for (Ingrediente i:listaIngredientes) {
+            inventario.put(i, 0);
         }
         this.inicio();
     }
