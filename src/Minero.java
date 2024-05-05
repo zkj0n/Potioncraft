@@ -1,10 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalTime;
 
 public class Minero extends Comerciante{
 
-    private List<Ingrediente> listaIngredientes= new ArrayList<>();
-
+    LocalTime ultimaVisita;
     public Minero(int id, String nombre) {
         super(id, nombre);
         BD.rellenarListaIngredientes(listaIngredientes);
@@ -24,15 +22,9 @@ public class Minero extends Comerciante{
             }
         }
     }
+
     public void reabastecer(){
-        for (int i=0; i<5; i++){
-            Ingrediente e= Comerciante.obtenerIngrediente(TipoIngrediente.MINERAL, listaIngredientes);
-            if (inventario.containsKey(e)){
-                int valorActual=inventario.get(e);
-                int valorSuma=random.nextInt(5,11);
-                int nuevoValor=valorActual+valorSuma;
-                inventario.put(e,nuevoValor);
-            }
-        }
+        this.reabastecer(TipoIngrediente.MINERAL);
+        this.ultimaVisita=LocalTime.now();
     }
 }

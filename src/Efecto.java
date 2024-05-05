@@ -11,5 +11,5 @@ public enum Efecto {
 
     Efecto(int i) {
     }
-
+    
 }

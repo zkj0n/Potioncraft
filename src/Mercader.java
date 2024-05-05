@@ -1,8 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Mercader extends Comerciante{
-    private List<Ingrediente> listaIngredientes= new ArrayList<>();
+
     public Mercader(int id, String nombre) {
         super(id, nombre);
 
@@ -23,15 +20,7 @@ public class Mercader extends Comerciante{
         }
     }
     public void reabastecer(){
-        for (int i=0; i<5; i++){
-            Ingrediente e= Comerciante.obtenerIngrediente(null, listaIngredientes);
-            if (inventario.containsKey(e)){
-                int valorActual=inventario.get(e);
-                int valorSuma=random.nextInt(5,11);
-                int nuevoValor=valorActual+valorSuma;
-                inventario.put(e,nuevoValor);
-            }
-        }
+        this.reabastecer(null);
     }
 
 

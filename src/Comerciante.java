@@ -1,11 +1,14 @@
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 
 public abstract class Comerciante {
     protected int id;
     protected String nombre;
+    protected List<Ingrediente> listaIngredientes= new ArrayList<>();
     protected static final Random random=new Random();
     protected Map<Ingrediente,Integer> inventario;
 
@@ -62,5 +65,37 @@ public abstract class Comerciante {
 
             }
         }
+    }
+    protected void reabastecer(TipoIngrediente tp){
+
+
+        Path rutaLog= Paths.get("abastecimientos.log");
+        List<String> lineas=new ArrayList<>();
+        try{
+            lineas.add("COMERCIANTE: "+this.getNombre());
+        }catch (Exception e){
+            System.out.println("Ocurrió un error al escribir un archivo: " + e.getMessage());
+        }
+
+        for (int i=0; i<5; i++){
+            Ingrediente e= Comerciante.obtenerIngrediente(tp, listaIngredientes);
+            if (inventario.containsKey(e)){
+                int valorActual=inventario.get(e);
+                int valorSuma=random.nextInt(5,11);
+                int nuevoValor=valorActual+valorSuma;
+                if (e!=null){
+                    lineas.add("\t--> "+e.getNombre()+". Cantidad Previa: "+valorActual+". Cantidad actual: "+nuevoValor);
+                }
+                inventario.put(e,nuevoValor);
+            }
+        }
+        lineas.add("");
+        try {
+
+            Files.write(rutaLog, lineas, StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            System.out.println("No se ha podido escribir el archivo: "+ex.getMessage());
+        }
+
     }
 }

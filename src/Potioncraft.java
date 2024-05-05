@@ -30,34 +30,19 @@ public class Potioncraft {
             case "1" -> {
             }
             case "2" -> {
-                for (Comerciante c: j.getListaComerciante().getListaComerciantes()){
-                    c.mostrar();
-                }
+
+            }
+            case "3"->{
+
+
             }
             case "4" -> {
-
-                for (Comerciante c: j.getListaComerciante().getListaComerciantes()){
-                    if (c instanceof Minero){
-                        ((Minero) c).reabastecer();
-                    } else if (c instanceof Herborista) {
-                        ((Herborista) c).reabastecer();
-                    } else if (c instanceof Recolector) {
-                        ((Recolector) c).reabastecer();
-                    } else if (c instanceof Mercader) {
-                        ((Mercader) c).reabastecer();
-                    }
-                }
-
+                j.reabastecerComerciantes();
+                j.getJugador().restarReputacion();
             }
-            case "5" ->{
-                j.getJugador().mostrar();
-            }
-            case "6" ->{
-                j.getListaComerciante().imprimir();
-            }
-            case "7"->{
-                j.mostrar();
-            }
+            case "5" -> j.getJugador().mostrarEstadisticas();
+            case "6" -> j.getListaComerciante().imprimir();
+            case "7"-> j.mostrarPociones();
             case "8"->{
                 Scanner scanner = new Scanner(System.in);
                 String s;
