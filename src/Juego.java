@@ -115,33 +115,43 @@ public class Juego {
 
             System.out.print("Elige el ID de la poción que deseas crear: ");
             int idSeleccionado = scanner.nextInt();
+            boolean puede=true;
+            Pocion pocionSalida = null;
+            for (Pocion p: listaPociones){
+                if (p.getId()==idSeleccionado){
+                    for (Map.Entry<Ingrediente, Integer> mapaP : p.getIngredientes().entrySet()){
+                        if (jugador.getMapaIngredientes().get(mapaP.getKey()) < mapaP.getValue() ){
+                            puede=false;
+                        }
+                    }
 
-            Pocion pocionSeleccionada = null;
-            Map<Ingrediente, Integer> ingredienteIntegerMap = null;
-            for (Pocion p : listaPociones) {
-                if (p.getId() == idSeleccionado) {
-                    pocionSeleccionada = p;
-                    ingredienteIntegerMap = new LinkedHashMap<>(p.getIngredientes());
+                    if (puede){
+                        for (Map.Entry<Ingrediente, Integer> m : p.getIngredientes().entrySet()){
+                            jugador.getMapaIngredientes().put(
+                                    m.getKey(),
+                                    jugador.getMapaIngredientes().get(m.getKey())-m.getValue()
+                            );
+                        }
+                        pocionSalida=p;
+                    }
+
                     break;
                 }
+
             }
 
-            if (pocionSeleccionada != null) {
-                for (Map.Entry<Ingrediente, Integer> m : ingredienteIntegerMap.entrySet()) {
-                    System.out.println(m.getKey() + " " + m.getValue());
-                }
-            } else {
-                System.out.println("El ID de la poción seleccionada no es válido.");
+            if (puede) {
+                int cantidadAnterior=jugador.getMapaPociones().get(pocionSalida);
+                jugador.getMapaPociones().put(pocionSalida, cantidadAnterior+1);
             }
 
         }catch (Exception e){
             System.out.println("Has seleccionado una opción incorrecta.");
         }
     }
-
-
-
-
+public void mostrrtrt(){
+        jugador.mostrarp();
+}
     public void comprarIngredientes() {
         Scanner scanner = new Scanner(System.in);
         List<Comerciante> cola = listaComerciante.getListaComerciantes();

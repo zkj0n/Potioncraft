@@ -31,7 +31,7 @@ public class Potioncraft {
                 j.crearPocion();
             }
             case "2" -> {
-
+            j.mostrrtrt();
             }
             case "3"->{
                 j.comprarIngredientes();

@@ -61,35 +61,44 @@ public class BD {
             System.out.println(e);
         }
     }
-    public static void rellenarListaPociones(List<Pocion> lP, List<Ingrediente> lI){
+    public static void rellenarListaPociones(List<Pocion> lP, List<Ingrediente> lI) {
         try (Connection con = DriverManager.getConnection(URL, USER, PASS)) {
-            String query = "select p.nombre, p.identificador, ip.idIngrediente, ip.unidades\n" +
-                    "from ingrediente i inner join ingredientes_pociones ip on i.identificador=ip.idIngrediente\n" +
-                    "inner join pocion p on p.identificador=ip.idPocion;";
+            String query = "SELECT p.nombre, p.identificador, ip.idIngrediente, ip.unidades " +
+                    "FROM pocion p " +
+                    "INNER JOIN ingredientes_pociones ip ON p.identificador = ip.idPocion " +
+                    "ORDER BY p.identificador, ip.idIngrediente;";
 
             Statement stmt = con.createStatement();
             ResultSet tabla = stmt.executeQuery(query);
 
+            Pocion pocion = null;
+            Map<Ingrediente, Integer> ingredientesPocion = new LinkedHashMap<>();
 
             while (tabla.next()) {
+                int pocionId = tabla.getInt("identificador");
+                if (pocion == null || pocion.getId() != pocionId) {
 
-                Map<Ingrediente, Integer> aux=new LinkedHashMap<>();
+                    if (pocion != null) {
 
-                for (Ingrediente i: lI){
-                    if (tabla.getInt("idIngrediente")==i.getId()){
-                        aux.put(i,tabla.getInt("unidades"));
+                        lP.add(new Pocion(pocion.getId(), pocion.getNombre(), new LinkedHashMap<>(ingredientesPocion)));
+                        ingredientesPocion.clear();
                     }
+                    pocion = new Pocion(pocionId, tabla.getString("nombre"), new LinkedHashMap<>());
                 }
 
-                lP.add(new Pocion(tabla.getInt("identificador"),
-                        tabla.getString("nombre"),
-                        aux));
+                int ingredienteId = tabla.getInt("idIngrediente");
+                for (Ingrediente i : lI) {
+                    if (i.getId() == ingredienteId) {
+                        ingredientesPocion.put(i, tabla.getInt("unidades"));
+                        break;
+                    }
+                }
             }
 
-
-
-
-        }catch (SQLException e){
+            if (pocion != null) {
+                lP.add(new Pocion(pocion.getId(), pocion.getNombre(), new LinkedHashMap<>(ingredientesPocion)));
+            }
+        } catch (SQLException e) {
             System.out.println("[ERROR]: Conexión fallida...");
         }
     }

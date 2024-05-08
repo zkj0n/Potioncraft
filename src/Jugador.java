@@ -73,5 +73,14 @@ public class Jugador {
     public Map<Pocion, Integer> getMapaPociones() {
         return mapaPociones;
     }
+
+    public void mostrarp(){
+        for (Map.Entry<Pocion, Integer> m: this.mapaPociones.entrySet()){
+            System.out.println(m.getKey().getNombre());
+            for (Map.Entry<Ingrediente, Integer> mm: m.getKey().getIngredientes().entrySet()){
+                System.out.println(mm.getKey().getNombre() + " "+m.getValue());
+            }
+        }
+    }
 }
 
