@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Jugador {
-    private int oro;
+    private double oro;
     private int reputacion;
     private Map<Ingrediente, Integer> mapaIngredientes;
     private Map<Pocion, Integer> mapaPociones;
@@ -13,6 +13,14 @@ public class Jugador {
         this.mapaPociones=inicioListaPociones();
 
 
+    }
+
+    public double getOro() {
+        return oro;
+    }
+
+    public void setOro(double oro) {
+        this.oro = oro;
     }
 
     public int getReputacion() {
@@ -58,5 +66,12 @@ public class Jugador {
          }
     }
 
+    public Map<Ingrediente, Integer> getMapaIngredientes() {
+        return mapaIngredientes;
+    }
+
+    public Map<Pocion, Integer> getMapaPociones() {
+        return mapaPociones;
+    }
 }
 

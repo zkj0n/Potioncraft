@@ -25,6 +25,5 @@ public class Minero extends Comerciante{
 
     public void reabastecer(){
         this.reabastecer(TipoIngrediente.MINERAL);
-        this.ultimaVisita=LocalTime.now();
     }
 }

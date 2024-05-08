@@ -28,13 +28,13 @@ public class Potioncraft {
     while (!salir){
         switch (menu(new Scanner(System.in))){
             case "1" -> {
+                j.crearPocion();
             }
             case "2" -> {
 
             }
             case "3"->{
-
-
+                j.comprarIngredientes();
             }
             case "4" -> {
                 j.reabastecerComerciantes();

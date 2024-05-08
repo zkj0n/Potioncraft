@@ -57,6 +57,11 @@ public abstract class Comerciante {
     public String getNombre() {
         return nombre;
     }
+
+    public Map<Ingrediente, Integer> getInventario() {
+        return inventario;
+    }
+
     public void mostrar(){
         System.out.println("\n"+this.getClass().getName().toUpperCase()+": "+this.getNombre());
         for (Map.Entry<Ingrediente, Integer> entrada : inventario.entrySet()) {
