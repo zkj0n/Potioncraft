@@ -9,7 +9,13 @@ public enum Efecto {
     FURIA(-1),
     SIN_EFECTO(0);
 
-    Efecto(int i) {
+    private final int valor;
+
+    Efecto(int valor) {
+        this.valor = valor;
     }
-    
+
+    public int obtenerValor() {
+        return valor;
+    }
 }

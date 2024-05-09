@@ -58,11 +58,15 @@ public class Jugador {
         System.out.println("Reputación: "+ this.reputacion);
         System.out.println("\n::Ingredientes:: ");
          for (Map.Entry<Ingrediente, Integer> entrada : this.mapaIngredientes.entrySet()) {
-                System.out.println("--> "+entrada.getKey().getNombre().toUpperCase() + ": " + entrada.getValue());
+             if (entrada.getValue()!=0){
+                 System.out.println("--> "+entrada.getKey().getNombre().toUpperCase() + ": " + entrada.getValue());
+             }
         }
          System.out.println("\n::Pociones::");
          for(Map.Entry<Pocion, Integer> entrada : this.mapaPociones.entrySet()){
-             System.out.println("--> "+entrada.getKey().getNombre().toUpperCase() + ": " + entrada.getValue());
+             if (entrada.getValue()!=0){
+                 System.out.println("--> "+entrada.getKey().getNombre().toUpperCase() + ": " + entrada.getValue());
+             }
          }
     }
 
@@ -74,13 +78,8 @@ public class Jugador {
         return mapaPociones;
     }
 
-    public void mostrarp(){
-        for (Map.Entry<Pocion, Integer> m: this.mapaPociones.entrySet()){
-            System.out.println(m.getKey().getNombre());
-            for (Map.Entry<Ingrediente, Integer> mm: m.getKey().getIngredientes().entrySet()){
-                System.out.println(mm.getKey().getNombre() + " "+m.getValue());
-            }
-        }
+    public void setReputacion(int reputacion) {
+        this.reputacion = reputacion;
     }
 }
 

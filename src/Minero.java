@@ -5,6 +5,7 @@ public class Minero extends Comerciante{
     LocalTime ultimaVisita;
     public Minero(int id, String nombre) {
         super(id, nombre);
+        this.ultimaVisita=LocalTime.now().minusMinutes(1);
         BD.rellenarListaIngredientes(listaIngredientes);
         for (Ingrediente i:listaIngredientes) {
             inventario.put(i, 0);
@@ -21,6 +22,14 @@ public class Minero extends Comerciante{
                 i--;
             }
         }
+    }
+
+    public void setUltimaVisita(LocalTime ultimaVisita) {
+        this.ultimaVisita = ultimaVisita;
+    }
+
+    public LocalTime getUltimaVisita() {
+        return ultimaVisita;
     }
 
     public void reabastecer(){

@@ -29,6 +29,18 @@ public class Ingrediente {
         return nombre;
     }
 
+    public Efecto getEfecto() {
+        return efecto;
+    }
+
+    public int getNivelToxicidad() {
+        return nivelToxicidad;
+    }
+
+    public double getDureza() {
+        return dureza;
+    }
+
     public double getPrecio() {
         return precio;
     }

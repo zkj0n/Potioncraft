@@ -21,58 +21,56 @@ public class Potioncraft {
 
     public static void main(String[] args) {
 
-    Juego j =new Juego();
+        Juego j =new Juego();
 
 
-    boolean salir=false;
-    while (!salir){
-        switch (menu(new Scanner(System.in))){
-            case "1" -> {
-                j.crearPocion();
-            }
-            case "2" -> {
-            j.mostrrtrt();
-            }
-            case "3"->{
-                j.comprarIngredientes();
-            }
-            case "4" -> {
-                j.reabastecerComerciantes();
-                j.getJugador().restarReputacion();
-            }
-            case "5" -> j.getJugador().mostrarEstadisticas();
-            case "6" -> j.getListaComerciante().imprimir();
-            case "7"-> j.mostrarPociones();
-            case "8"->{
-                Scanner scanner = new Scanner(System.in);
-                String s;
-                boolean b = false;
-
-                while (!b) {
-                    System.out.println("¿Desea guardar el estado? [S/N]");
-                    s = scanner.next();
-
-                    if (s.equalsIgnoreCase("S")) {
-                        b = true;
-                        salir = true;
-                    } else if (s.equalsIgnoreCase("N")) {
-                        b = true;
-                        salir = true;
-                    } else {
-                        System.out.print("Selecciona una opción válida. Pulsa INTRO para continuar...");
-                        new Scanner(System.in).nextLine();
-                    }
+        boolean salir=false;
+        while (!salir){
+            switch (menu(new Scanner(System.in))){
+                case "1" -> {
+                    j.crearPocion(true);
                 }
+                case "2" -> {
+                    j.venderPocion(true);
+                }
+                case "3"->{
+                    j.comprarIngredientes();
+                }
+                case "4" -> {
+                    j.reabastecerComerciantes();
+                    j.getJugador().restarReputacion();
+                }
+                case "5" -> j.getJugador().mostrarEstadisticas();
+                case "6" -> j.getListaComerciante().imprimir();
+                case "7"-> j.mostrarPociones();
+                case "8"->{
+                    Scanner scanner = new Scanner(System.in);
+                    String s;
+                    boolean b = false;
 
-                scanner.close();
-            }
-            default -> {
-                System.out.print("Selecciona una opción válida. Pulsa INTRO para continuar...");
-                new Scanner(System.in).nextLine();
+                    while (!b) {
+                        System.out.println("¿Desea guardar el estado? [S/N]");
+                        s = scanner.next();
+
+                        if (s.equalsIgnoreCase("S")) {
+                            b = true;
+                            salir = true;
+                        } else if (s.equalsIgnoreCase("N")) {
+                            b = true;
+                            salir = true;
+                        } else {
+                            System.out.print("Selecciona una opción válida. Pulsa INTRO para continuar...");
+                            new Scanner(System.in).nextLine();
+                        }
+                    }
+
+                    scanner.close();
+                }
+                default -> {
+                    System.out.print("Selecciona una opción válida. Pulsa INTRO para continuar...");
+                    new Scanner(System.in).nextLine();
+                }
             }
         }
-
-}
-
     }
 }
