@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ingrediente {
+public class Ingrediente implements Serializable {
     private int id;
     private TipoIngrediente tipo;
     private String nombre;

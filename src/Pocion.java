@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class Pocion {
+public class Pocion implements Serializable {
     private int id;
     private String nombre;
     private Map<Ingrediente, Integer> ingredientes;

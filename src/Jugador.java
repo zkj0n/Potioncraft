@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Jugador {
+public class Jugador implements Serializable {
     private double oro;
     private int reputacion;
     private Map<Ingrediente, Integer> mapaIngredientes;
@@ -54,7 +55,7 @@ public class Jugador {
         return m;
     }
     public void mostrarEstadisticas(){
-        System.out.println("Saldo: "+ this.oro);
+        System.out.printf("Saldo: %.2f\n", this.oro);
         System.out.println("Reputación: "+ this.reputacion);
         System.out.println("\n::Ingredientes:: ");
          for (Map.Entry<Ingrediente, Integer> entrada : this.mapaIngredientes.entrySet()) {

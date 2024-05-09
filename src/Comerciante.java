@@ -1,11 +1,12 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-public abstract class Comerciante {
+public abstract class Comerciante implements Serializable {
     protected int id;
     protected String nombre;
     protected List<Ingrediente> listaIngredientes= new ArrayList<>();

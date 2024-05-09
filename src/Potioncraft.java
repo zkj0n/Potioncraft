@@ -19,19 +19,41 @@ public class Potioncraft {
         return scanner.next();
     }
 
+
     public static void main(String[] args) {
 
-        Juego j =new Juego();
+        Juego j;
+        boolean cargarEstado = false;
+        Scanner scanner = new Scanner(System.in);
+
+
+        System.out.println("¿Desea cargar un estado previo del juego? [S/N]");
+        String respuesta = scanner.next();
+        if (respuesta.equalsIgnoreCase("S")) {
+            cargarEstado = true;
+        }
+
+        if (cargarEstado) {
+
+            j = Juego.cargarEstado("estado.bin");
+            if (j == null) {
+
+                j = new Juego();
+            }
+        } else {
+
+            j = new Juego();
+        }
 
 
         boolean salir=false;
         while (!salir){
             switch (menu(new Scanner(System.in))){
                 case "1" -> {
-                    j.crearPocion(true);
+                    j.crearPocion(false);
                 }
                 case "2" -> {
-                    j.venderPocion(true);
+                    j.venderPocion(false);
                 }
                 case "3"->{
                     j.comprarIngredientes();
@@ -44,7 +66,6 @@ public class Potioncraft {
                 case "6" -> j.getListaComerciante().imprimir();
                 case "7"-> j.mostrarPociones();
                 case "8"->{
-                    Scanner scanner = new Scanner(System.in);
                     String s;
                     boolean b = false;
 
@@ -53,6 +74,7 @@ public class Potioncraft {
                         s = scanner.next();
 
                         if (s.equalsIgnoreCase("S")) {
+                            j.guardarEstado("estado.bin");
                             b = true;
                             salir = true;
                         } else if (s.equalsIgnoreCase("N")) {

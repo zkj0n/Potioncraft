@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Juego {
+public class Juego implements Serializable{
     private ListaComerciante listaComerciante;
     private List<Ingrediente> listaIngredientes;
     private List<Pocion> listaPociones;
@@ -28,7 +28,7 @@ public class Juego {
     public void crearPocion(boolean trucos){
 
         Scanner scanner = new Scanner(System.in);
-        int idSeleccionado=0;
+        int idSeleccionado;
 
         if (trucos){
             for (Map.Entry<Ingrediente, Integer> entry : jugador.getMapaIngredientes().entrySet()) {
@@ -109,6 +109,10 @@ public class Juego {
         }
     }
     public void venderPocion(boolean trucos){
+        Scanner scanner = new Scanner(System.in);
+        int idSeleccionado;
+        double precioPocion=0;
+        double precioFinal=0;
         if (trucos){
             for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()) {
                 entry.setValue(99);
@@ -125,19 +129,32 @@ public class Juego {
         }
 
         for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()) {
-            double precioPocion=0;
-            double precioFinal=0;
+
             for (Map.Entry<Ingrediente, Integer> m : entry.getKey().getIngredientes().entrySet()){
                 precioPocion+=m.getKey().getPrecio();
-                precioFinal+=((precioPocion*comision)/100) + precioPocion;
             }
-            System.out.printf("Nombre: %s Unidades: %d Precio UD.: %.2f Precio Final.: %.2f\n",
+            precioFinal+=((precioPocion*comision)/100) + precioPocion;
+            System.out.printf("%d. %s Unidades: %d Precio UD.: %.2f Precio Final.: %.2f\n",
+                    entry.getKey().getId(),
                     entry.getKey().getNombre(),
                     entry.getValue(),
                     precioPocion,
                     precioFinal
             );
         }
+        System.out.print("Elige el ID de la poción: ");
+        idSeleccionado = scanner.nextInt();
+
+        for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()){
+            if (entry.getKey().getId()==idSeleccionado){
+                int c=jugador.getMapaPociones().get(entry.getKey());
+                jugador.getMapaPociones().put(entry.getKey(), c-1);
+                jugador.setOro(jugador.getOro()+precioFinal);
+                System.out.println("La poción se ha vendido con éxito (Pulsa INTRO para salir)...");
+                new Scanner(System.in).nextLine();
+            }
+        }
+
     }
 
     // Método de comprar ingredientes, compruebo si es un minero y en caso de ser así comprueba la hora de visita
@@ -322,5 +339,36 @@ public class Juego {
     public ListaComerciante getListaComerciante() {
         return listaComerciante;
     }
+    // Método para guardar el estado del juego en un archivo binario
+    public void guardarEstado(String nombreArchivo) {
+        try {
+            ObjectOutputStream salida;
+            File archivo = new File(nombreArchivo);
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+            salida = new ObjectOutputStream(new FileOutputStream(archivo));
+            salida.writeObject(this);
+            salida.close();
+            System.out.println("Estado del juego guardado correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al guardar el estado del juego: " + e.getMessage());
+        }
+    }
+
+    // Método para cargar el estado del juego desde un archivo binario
+    public static Juego cargarEstado(String nombreArchivo) {
+        Juego juego = null;
+        try {
+            ObjectInputStream entrada = new ObjectInputStream(new FileInputStream(nombreArchivo));
+            juego = (Juego) entrada.readObject();
+            entrada.close();
+            System.out.println("Estado del juego cargado correctamente.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error al cargar el estado del juego: " + e.getMessage());
+        }
+        return juego;
+    }
+
 }
 
