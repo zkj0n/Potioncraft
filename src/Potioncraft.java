@@ -53,7 +53,7 @@ public class Potioncraft {
                     j.crearPocion(false);
                 }
                 case "2" -> {
-                    j.venderPocion(false);
+                    j.venderPocion(true);
                 }
                 case "3"->{
                     j.comprarIngredientes();

@@ -113,6 +113,7 @@ public class Juego implements Serializable{
         int idSeleccionado;
         double precioPocion=0;
         double precioFinal=0;
+
         if (trucos){
             for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()) {
                 entry.setValue(99);
@@ -130,23 +131,25 @@ public class Juego implements Serializable{
 
         for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()) {
 
-            for (Map.Entry<Ingrediente, Integer> m : entry.getKey().getIngredientes().entrySet()){
-                precioPocion+=m.getKey().getPrecio();
+            if (entry.getValue()>0){
+                for (Map.Entry<Ingrediente, Integer> m : entry.getKey().getIngredientes().entrySet()){
+                    precioPocion+=m.getKey().getPrecio();
+                }
+                precioFinal+=((precioPocion*comision)/100) + precioPocion;
+                System.out.printf("%d. %s Unidades: %d Precio UD.: %.2f Precio Final.: %.2f\n",
+                        entry.getKey().getId(),
+                        entry.getKey().getNombre(),
+                        entry.getValue(),
+                        precioPocion,
+                        precioFinal
+                );
             }
-            precioFinal+=((precioPocion*comision)/100) + precioPocion;
-            System.out.printf("%d. %s Unidades: %d Precio UD.: %.2f Precio Final.: %.2f\n",
-                    entry.getKey().getId(),
-                    entry.getKey().getNombre(),
-                    entry.getValue(),
-                    precioPocion,
-                    precioFinal
-            );
         }
         System.out.print("Elige el ID de la poción: ");
         idSeleccionado = scanner.nextInt();
 
         for (Map.Entry<Pocion, Integer> entry : jugador.getMapaPociones().entrySet()){
-            if (entry.getKey().getId()==idSeleccionado){
+            if (entry.getKey().getId()==idSeleccionado && entry.getValue()>0){
                 int c=jugador.getMapaPociones().get(entry.getKey());
                 jugador.getMapaPociones().put(entry.getKey(), c-1);
                 jugador.setOro(jugador.getOro()+precioFinal);
